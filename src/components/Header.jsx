@@ -32,9 +32,14 @@ const Header = () => {
   const [active, setActive] = useState("/");
 
   return (
-    <header className="sticky top-0 lg:w-24 lg:h-screen lg:fixed">
+    <header
+      className="sticky top-0 lg:w-24 lg:h-screen lg:fixed z-[99]"
+      style={{
+        background: "linear-gradient(#020617, #020617CC 75%, #02061700)",
+      }}
+    >
       <div className="h-full p-4 flex flex-col gap-4 justify-center items-center">
-        <Link to="/" className="lg:fixed top-8">
+        <Link to="/" className="lg:fixed top-8" onClick={() => setActive("/")}>
           <img src="logo-title.svg" className="block lg:hidden h-12" />
           <img src="logo.svg" className="hidden lg:block h-12" />
         </Link>
