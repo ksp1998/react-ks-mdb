@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const navItmes = [
   {
@@ -26,10 +25,27 @@ const navItmes = [
       active: "ic-show-fill.svg",
     },
   },
+  {
+    href: "/search",
+    text: "Search",
+    icon: {
+      default: "ic-search.svg",
+      active: "ic-search-fill.svg",
+    },
+  },
 ];
 
 const Header = () => {
-  const [active, setActive] = useState("/");
+  const location = useLocation();
+  const active = location.pathname;
+
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <header
@@ -38,22 +54,22 @@ const Header = () => {
         background: "linear-gradient(#020617, #020617CC 75%, #02061700)",
       }}
     >
-      <div className="h-full p-4 flex flex-col gap-4 justify-center items-center">
-        <Link to="/" className="lg:fixed top-8" onClick={() => setActive("/")}>
+      <div className="group relative h-full p-4 flex flex-col gap-4 justify-center items-center">
+        <Link to="/" className="lg:fixed top-8" onClick={scrollToTop}>
           <img src="logo-title.svg" className="block lg:hidden h-12" />
           <img src="logo.svg" className="hidden lg:block h-12" />
         </Link>
-        <nav className="">
+        <nav className="z-10">
           <ul className="flex gap-0.5 rounded-3xl overflow-hidden lg:flex-col lg:gap-5 lg:overflow-visible">
             {navItmes.map((item) => (
               <li
                 key={item.href}
-                className="group bg-gray-800 hover:bg-slate-900 duration-300 lg:bg-transparent lg:hover:bg-transparent"
+                className="bg-gray-800 hover:bg-slate-900 duration-300 lg:bg-transparent lg:hover:bg-transparent"
               >
                 <Link
                   to={item.href}
-                  className="inline-flex gap-2 lg:gap-4 items-center px-4 py-3"
-                  onClick={() => setActive(item.href)}
+                  className="group inline-flex gap-2 lg:gap-4 items-center px-4 py-3 hover:scale-125 lg:origin-left duration-300"
+                  onClick={scrollToTop}
                 >
                   <img
                     src={
@@ -62,9 +78,9 @@ const Header = () => {
                         : item.icon.default
                     }
                     alt=""
-                    className="h-6 duration-300 group-hover:scale-125"
+                    className="h-6 duration-300"
                   />
-                  <span className="lg:w-0 lg:opacity-0 lg:-translate-x-5 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 duration-300">
+                  <span className="hidden sm:block lg:w-0 lg:opacity-0 lg:-translate-x-5 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 duration-300">
                     {item.text}
                   </span>
                 </Link>
@@ -72,6 +88,13 @@ const Header = () => {
             ))}
           </ul>
         </nav>
+
+        <div
+          className="hidden absolute left-full w-48 h-full group-hover:block"
+          style={{
+            backgroundImage: "linear-gradient(to right, #020617, #02061700)",
+          }}
+        ></div>
       </div>
     </header>
   );
