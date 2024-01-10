@@ -1,17 +1,9 @@
-import { CardsContainerRow } from "../components";
+import { Explore } from "../components";
 
 const Movies = () => {
   document.title = "KS MDB | Movies";
 
-  return (
-    <div className="">
-      <CardsContainerRow
-        title="Explore Movies"
-        endpoint="https://api.themoviedb.org/3/discover/movie"
-        className="flex-wrap justify-center gap-y-8 lg:mr-4"
-      />
-    </div>
-  );
+  return <Explore heading="Explore Movies" mediaType="movie" />;
 };
 
 export default Movies;

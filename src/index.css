@@ -13,3 +13,12 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+.react-select-container .react-select__control {
+  background-color: rgba(31, 41, 55, var(--tw-bg-opacity));
+  min-width: 250px;
+}
+
+.react-select-container .react-select__single-value {
+  color: white;
+}

@@ -24,32 +24,31 @@ const Card = ({ record }) => {
               effect="blur"
             />
           </div>
-          {!!rating && (
-            <div className="relative -translate-y-1/2 start-2 text-black font-bold bg-white rounded-full flex justify-center items-center w-1/4 h-/4 z-10">
-              <svg viewBox="0 0 100 100" className="p-0.5">
-                <path
-                  d="M 50,50 m 0,-46 a 46,46 0 1 1 0,92 a 46,46 0 1 1 0,-92"
-                  strokeWidth="8"
-                  fillOpacity="0"
-                  style={{
-                    stroke:
-                      rating === 0
-                        ? "gray"
-                        : rating < 4
-                        ? "red"
-                        : rating < 7
-                        ? "orange"
-                        : "green",
-                    strokeDasharray: "290px, 290px",
-                    strokeDashoffset: 140 - rating * 10,
-                  }}
-                ></path>
-                <text x="25" y="60" className="text-4xl">
-                  {rating.toFixed(1)}
-                </text>
-              </svg>
-            </div>
-          )}
+
+          <div className="relative -translate-y-1/2 start-2 text-black font-bold bg-white rounded-full flex justify-center items-center w-1/4 h-/4 z-10">
+            <svg viewBox="0 0 100 100" className="p-0.5">
+              <path
+                d="M 50,50 m 0,-46 a 46,46 0 1 1 0,92 a 46,46 0 1 1 0,-92"
+                strokeWidth="8"
+                fillOpacity="0"
+                style={{
+                  stroke:
+                    rating === 0
+                      ? "gray"
+                      : rating < 4
+                      ? "red"
+                      : rating < 7
+                      ? "orange"
+                      : "green",
+                  strokeDasharray: "290px",
+                  strokeDashoffset: 140 - rating * 10,
+                }}
+              ></path>
+              <text x="25" y="60" className="text-4xl">
+                {!!rating && rating?.toFixed(1)}
+              </text>
+            </svg>
+          </div>
 
           <div className="hidden absolute bottom-8 end-1 md:flex items-end gap-1">
             {record.genre_ids?.map(
