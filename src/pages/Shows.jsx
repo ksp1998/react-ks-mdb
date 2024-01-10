@@ -1,6 +1,8 @@
 import { CardsContainerRow } from "../components";
 
 const Shows = () => {
+  document.title = "KS MDB | TV Shows";
+
   return (
     <div className="">
       <CardsContainerRow

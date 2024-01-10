@@ -1,6 +1,8 @@
 import { CardsContainerRow } from "../components";
 
 const Movies = () => {
+  document.title = "KS MDB | Movies";
+
   return (
     <div className="">
       <CardsContainerRow

@@ -1,4 +1,4 @@
-import { CardsContainerRow } from "../components";
+import { CardsContainerRow, Hero } from "../components";
 
 const sections = [
   {
@@ -40,8 +40,11 @@ const sections = [
 ];
 
 const Home = () => {
+  document.title = "KS MDB | Watch Popular Movies & TV Shows";
+
   return (
     <div className="">
+      <Hero />
       {sections.map((section, i) => (
         <CardsContainerRow
           key={i}
