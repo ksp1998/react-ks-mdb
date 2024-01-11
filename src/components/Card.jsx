@@ -3,22 +3,30 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-const Card = ({ record }) => {
+const Card = ({ record, mediaType }) => {
   const genres = useSelector((state) => state.genres);
   const conf = useSelector((state) => state.conf);
   const rating = Number(record?.vote_average);
 
   return (
     <div className="min-w-[calc(100%/3-7px)] md:min-w-[calc(100%/4-7px)] lg:min-w-[calc(100%/5-7px)] xl:min-w-[calc(100%/6-7px)] 2xl:min-w-[calc(100%/7-7px)] w-[calc(100%/3-7px)] md:w-[calc(100%/4-7px)] lg:w-[calc(100%/5-7px)] xl:w-[calc(100%/6-7px)] 2xl:w-[calc(100%/7-7px)]">
-      <Link to={`/${record.media_type || "tv"}/${record.id}`}>
+      <Link
+        to={`/${
+          record?.media_type || mediaType || (record?.title ? "movie" : "tv")
+        }/${record.id}`}
+      >
         <div className="relative">
           <div className="rounded-lg overflow-hidden aspect-[2/3]">
             <LazyLoadImage
               wrapperClassName={`w-full bg-gray-900 aspect-[2/3] ${
-                record?.poster_path ? "" : "animate-pulse"
+                record ? "" : "animate-pulse"
               }`}
               className="rounded-lg hover:scale-110 duration-300 transition-[all!important]"
-              src={`${conf?.images?.base_url}/w300/${record?.poster_path}`}
+              src={
+                record?.poster_path
+                  ? `${conf?.images?.base_url}/w300/${record?.poster_path}`
+                  : "/no-poster.png"
+              }
               alt=""
               placeholderSrc="/logo.svg"
               effect="blur"
@@ -26,26 +34,33 @@ const Card = ({ record }) => {
           </div>
 
           <div className="relative -translate-y-1/2 start-2 text-black font-bold bg-white rounded-full flex justify-center items-center w-1/4 h-/4 z-10">
-            <svg viewBox="0 0 100 100" className="p-0.5">
-              <path
-                d="M 50,50 m 0,-46 a 46,46 0 1 1 0,92 a 46,46 0 1 1 0,-92"
+            <svg
+              width="200"
+              xmlns="http//www.w3.org/2000/svg"
+              viewBox="0 0 50 50"
+              className="p-0.5 rounded-full"
+            >
+              <circle
+                cx="25"
+                cy="25"
+                r="24"
                 strokeWidth="8"
-                fillOpacity="0"
-                style={{
-                  stroke:
-                    rating === 0
-                      ? "gray"
-                      : rating < 4
-                      ? "red"
-                      : rating < 7
-                      ? "orange"
-                      : "green",
-                  strokeDasharray: "290px",
-                  strokeDashoffset: 140 - rating * 10,
-                }}
-              ></path>
-              <text x="25" y="60" className="text-4xl">
-                {!!rating && rating?.toFixed(1)}
+                stroke={
+                  rating === 0
+                    ? "gray"
+                    : rating < 4
+                    ? "red"
+                    : rating < 7
+                    ? "orange"
+                    : "green"
+                }
+                fill="none"
+                transform="rotate(-90 25 25)"
+                strokeDasharray={`${rating * 10} 100`}
+                pathLength="100"
+              />
+              <text x="25" y="25" dominantBaseline="middle" textAnchor="middle">
+                {(rating || 0).toFixed(1)}
               </text>
             </svg>
           </div>

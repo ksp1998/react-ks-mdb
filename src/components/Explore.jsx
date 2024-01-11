@@ -21,8 +21,7 @@ const sortByOptions = [
 ];
 
 const Explore = ({ heading, mediaType }) => {
-  const [data, setData] = useState({ results: [] });
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({ results: Array(20).fill({}) });
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({});
 
@@ -40,10 +39,8 @@ const Explore = ({ heading, mediaType }) => {
   }, [filters]);
 
   const fetchData = useCallback(() => {
-    page === 1 && setLoading(true);
     fetchRecordFromApi(`/discover/${mediaType}?page=${page}`, getOptions())
       .then((response) => {
-        console.log(response);
         if (response?.results) {
           if (page > 1) {
             setData({
@@ -57,7 +54,6 @@ const Explore = ({ heading, mediaType }) => {
           console.log(response);
         }
         setPage((prev) => prev + 1);
-        setLoading(false);
       })
       .catch((error) => console.log(error));
   }, [mediaType, getOptions, page, data]);
@@ -108,32 +104,31 @@ const Explore = ({ heading, mediaType }) => {
 
       <div className="relative p-2">
         <h3 className="text-xl font-bold py-2">{heading}</h3>
-
-        {loading && <Spinner initial={true} />}
-
-        {!loading && (
-          <>
-            {data?.results?.length > 0 ? (
-              <InfiniteScroll
-                className="content"
-                dataLength={data?.results?.length || []}
-                next={fetchData}
-                hasMore={page <= data?.total_pages}
-                loader={<Spinner />}
-              >
-                <div className="flex gap-2 flex-wrap justify-center gap-y-8 lg:mr-4">
-                  {data?.results?.map((item, index) => (
-                    <Card key={item.id || index} record={item} />
-                  ))}
-                </div>
-              </InfiniteScroll>
-            ) : (
-              <div className="text-center text-2xl">
-                Sorry, Results not found!
+        <>
+          {data?.results?.length > 0 ? (
+            <InfiniteScroll
+              className="content"
+              dataLength={data?.results?.length || []}
+              next={fetchData}
+              hasMore={page <= data?.total_pages}
+              loader={<Spinner />}
+            >
+              <div className="flex gap-2 flex-wrap justify-center gap-y-8 lg:mr-4">
+                {data?.results?.map((item, index) => (
+                  <Card
+                    key={item.id || index}
+                    record={item}
+                    mediaType={mediaType}
+                  />
+                ))}
               </div>
-            )}
-          </>
-        )}
+            </InfiniteScroll>
+          ) : (
+            <div className="text-center text-2xl">
+              Sorry, Results not found!
+            </div>
+          )}
+        </>
       </div>
     </div>
   );
