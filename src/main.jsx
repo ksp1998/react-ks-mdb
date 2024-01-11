@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Home, Movies, Shows } from "./pages";
+import { Home, Movies, Shows, Search } from "./pages";
 import App from "./App";
 
 const router = createBrowserRouter([
@@ -21,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/shows",
         element: <Shows />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
     ],
   },

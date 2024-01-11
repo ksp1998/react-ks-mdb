@@ -87,7 +87,9 @@ const Card = ({ record, mediaType }) => {
             )}
           </span>
           <span className="text-sm text-gray-400 font-semibold">
-            {record.release_date || record.first_air_date || (
+            {record ? (
+              record.release_date || record.first_air_date
+            ) : (
               <div className="min-h-5 bg-gray-800 rounded-lg animate-pulse"></div>
             )}
           </span>
