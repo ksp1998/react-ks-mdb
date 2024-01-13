@@ -1,13 +1,18 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import PlayIcon from "./PlayIcon";
+import { usePlayer } from "../utlils/hooks";
 
 const VideoCard = ({ video }) => {
+  const { setVideoId, setShowPlayer } = usePlayer();
   return (
     <div
       className="group min-w-[calc(100%/1.75-16px)] md:min-w-[calc(100%/2.5-16px)] lg:min-w-[calc(100%/3-16px)] xl:min-w-[calc(100%/4-16px)] 2xl:min-w-[calc(100%/5-16px)] w-[calc(100%/3-16px)] md:w-[calc(100%/5-16px)] lg:w-[calc(100%/6-16px)] xl:w-[calc(100%/7-16px)] 2xl:w-[calc(100%/8-16px)]"
       style={{ cursor: !video ? "not-allowed" : "pointer" }}
-      onClick={() => alert("Play Video")}
+      onClick={() => {
+        setVideoId(video?.key);
+        setShowPlayer(true);
+      }}
     >
       <div className="relative">
         <div

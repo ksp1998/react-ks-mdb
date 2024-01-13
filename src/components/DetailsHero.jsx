@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { PlayIcon, RatingProgress } from "./";
 import { _404 } from "../pages";
+import { usePlayer } from "../utlils/hooks";
 
 const toHoursAndMinutes = (totalMinutes) => {
   const hours = Math.floor(totalMinutes / 60);
@@ -12,15 +13,16 @@ const toHoursAndMinutes = (totalMinutes) => {
   return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
 };
 
-const DetailsHero = ({ mediaType, crew }) => {
+const DetailsHero = ({ mediaType, trailer, crew }) => {
   const { id } = useParams();
-
   const {
     data: media,
     loading,
     error,
   } = useAxios(`${TMDB_API_BASE_URL}/${mediaType}/${id}`);
   const conf = useSelector((state) => state.tmdb.conf);
+
+  const { setVideoId, setShowPlayer } = usePlayer();
 
   const directors = crew?.filter((cr) => cr.job === "Director");
   const writers = crew?.filter((cr) =>
@@ -119,7 +121,10 @@ const DetailsHero = ({ mediaType, crew }) => {
 
               <div
                 className="flex items-center gap-4 hover:text-green-500 hover:scale-95 duration-300 cursor-pointer"
-                onClick={() => alert("Play Trailer")}
+                onClick={() => {
+                  setVideoId(trailer?.key);
+                  setShowPlayer(true);
+                }}
               >
                 <PlayIcon />
                 <span className="text-lg">Watch Trailer</span>

@@ -11,6 +11,7 @@ import Videos from "./Videos";
 import VideoCard from "./VideoCard";
 import RatingProgress from "./RatingProgress";
 import PlayIcon from "./PlayIcon";
+import Player from "./Player";
 
 export {
   Header,
@@ -26,4 +27,5 @@ export {
   VideoCard,
   RatingProgress,
   PlayIcon,
+  Player,
 };
