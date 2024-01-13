@@ -1,7 +1,8 @@
+import _404 from "./404";
 import Details from "./Details";
 import Home from "./Home";
 import Movies from "./Movies";
 import Search from "./Search";
 import Shows from "./Shows";
 
-export { Home, Movies, Shows, Search, Details };
+export { Home, Movies, Shows, Search, Details, _404 };

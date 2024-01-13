@@ -4,6 +4,7 @@ import { TMDB_API_BASE_URL } from "../utlils";
 import { useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { PlayIcon, RatingProgress } from "./";
+import { _404 } from "../pages";
 
 const toHoursAndMinutes = (totalMinutes) => {
   const hours = Math.floor(totalMinutes / 60);
@@ -14,9 +15,11 @@ const toHoursAndMinutes = (totalMinutes) => {
 const DetailsHero = ({ mediaType, crew }) => {
   const { id } = useParams();
 
-  const { data: media, loading } = useAxios(
-    `${TMDB_API_BASE_URL}/${mediaType}/${id}`
-  );
+  const {
+    data: media,
+    loading,
+    error,
+  } = useAxios(`${TMDB_API_BASE_URL}/${mediaType}/${id}`);
   const conf = useSelector((state) => state.tmdb.conf);
 
   const directors = crew?.filter((cr) => cr.job === "Director");
@@ -25,6 +28,10 @@ const DetailsHero = ({ mediaType, crew }) => {
   );
 
   document.title = `KS MDB | ${media?.title ?? media?.name ?? "Details"}`;
+
+  if (!loading && error) {
+    return <_404 />;
+  }
 
   return (
     <>
