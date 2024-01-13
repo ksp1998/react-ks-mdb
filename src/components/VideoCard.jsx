@@ -11,13 +11,13 @@ const VideoCard = ({ video }) => {
     >
       <div className="relative">
         <div
-          className={`rounded-lg overflow-hidden aspect-[16/9] bg-gray-900 ${
+          className={`rounded-lg overflow-hidden aspect-[16/9] bg-gray-900 group-hover:opacity-60 duration-300 ${
             video ? "" : "animate-pulse"
           }`}
         >
           {video?.key && (
             <LazyLoadImage
-              wrapperClassName={`w-full aspect-[16/9]`}
+              wrapperClassName="w-full aspect-[16/9]"
               className="rounded-lg hover:scale-110 duration-300 transition-[all!important] w-full h-full object-cover"
               src={`https://img.youtube.com/vi/${video?.key}/mqdefault.jpg`}
               alt={video?.name}

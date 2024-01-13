@@ -3,11 +3,12 @@ import useAxios from "../utlils/hooks/useAxios";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useEffect, useState } from "react";
+import { TMDB_API_BASE_URL } from "../utlils";
 
 const Hero = () => {
-  const genres = useSelector((state) => state.genres);
-  const baseUrl = useSelector((state) => state?.conf?.images?.base_url);
-  const { data } = useAxios("https://api.themoviedb.org/3/movie/upcoming");
+  const genres = useSelector((state) => state.tmdb.genres);
+  const baseUrl = useSelector((state) => state.tmdb.conf?.images?.base_url);
+  const { data } = useAxios(`${TMDB_API_BASE_URL}/movie/upcoming`);
   const [movie, setMovie] = useState({});
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const Hero = () => {
           {movie?.genre_ids?.map(
             (genreId) =>
               genres[genreId] && (
-                <div key={genreId} className="px-4 py-1 bg-gray-800 rounded-md">
+                <div key={genreId} className="px-4 py-1 bg-gray-900 rounded-md">
                   {genres[genreId]}
                 </div>
               )

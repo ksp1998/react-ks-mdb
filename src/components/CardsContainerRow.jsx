@@ -8,8 +8,8 @@ const CardsContainerRow = ({ endpoint, title, className = "" }) => {
     <div className="relative p-2">
       <h3 className="text-xl font-bold py-2">{title}</h3>
       <div className={`flex gap-2 overflow-auto no-scrollbar ${className}`}>
-        {(data?.results || Array(20).fill({}))?.map((record, i) => (
-          <Card key={record.id || i} record={record} />
+        {(data?.results || Array(20).fill(null))?.map((record, index) => (
+          <Card key={record?.id || index} record={record} />
         ))}
       </div>
       <div className="text-red-500">{error}</div>

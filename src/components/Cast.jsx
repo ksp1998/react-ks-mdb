@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Cast = ({ cast, error, className }) => {
-  const conf = useSelector((state) => state.conf);
+  const conf = useSelector((state) => state.tmdb.conf);
 
   return (
     <div className="relative p-2">

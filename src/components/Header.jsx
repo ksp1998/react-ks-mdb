@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { scrollToTop } from "../utlils";
 
 const navItmes = [
   {
@@ -39,14 +40,6 @@ const Header = () => {
   const location = useLocation();
   const active = location.pathname;
 
-  const scrollToTop = () => {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
-
   return (
     <header
       className="sticky top-0 lg:w-24 lg:h-screen lg:fixed z-[99]"
@@ -56,8 +49,8 @@ const Header = () => {
     >
       <div className="group relative h-full p-4 flex flex-col gap-4 justify-center items-center">
         <Link to="/" className="lg:fixed top-8" onClick={scrollToTop}>
-          <img src="logo-title.svg" className="block lg:hidden h-12" />
-          <img src="logo.svg" className="hidden lg:block h-12" />
+          <img src="/logo-title.svg" className="block lg:hidden h-12" />
+          <img src="/logo.svg" className="hidden lg:block h-12" />
         </Link>
         <nav className="z-10">
           <ul className="flex gap-0.5 rounded-3xl overflow-hidden lg:flex-col lg:gap-5 lg:overflow-visible">
@@ -74,8 +67,8 @@ const Header = () => {
                   <img
                     src={
                       active === item.href
-                        ? item.icon.active
-                        : item.icon.default
+                        ? `/${item.icon.active}`
+                        : `/${item.icon.default}`
                     }
                     alt=""
                     className="h-6 duration-300"

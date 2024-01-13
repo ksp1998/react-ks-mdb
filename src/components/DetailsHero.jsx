@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import useAxios from "../utlils/hooks/useAxios";
-import { BASE_URL } from "../utlils";
+import { TMDB_API_BASE_URL } from "../utlils";
 import { useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { PlayIcon, RatingProgress } from "./";
@@ -14,13 +14,17 @@ const toHoursAndMinutes = (totalMinutes) => {
 const DetailsHero = ({ mediaType, crew }) => {
   const { id } = useParams();
 
-  const { data: media, loading } = useAxios(`${BASE_URL}/${mediaType}/${id}`);
-  const conf = useSelector((state) => state.conf);
+  const { data: media, loading } = useAxios(
+    `${TMDB_API_BASE_URL}/${mediaType}/${id}`
+  );
+  const conf = useSelector((state) => state.tmdb.conf);
 
   const directors = crew?.filter((cr) => cr.job === "Director");
   const writers = crew?.filter((cr) =>
     ["Screenplay", "Story", "Writer"].includes(cr?.job)
   );
+
+  document.title = `KS MDB | ${media?.title ?? media?.name ?? "Details"}`;
 
   return (
     <>

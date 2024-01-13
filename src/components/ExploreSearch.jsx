@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchRecordFromApi } from "../utlils";
+import { TMDB_API_BASE_URL, fetchRecordFromApi } from "../utlils";
 import Spinner from "./Spinner";
 import Card from "./Card";
 
@@ -11,9 +11,13 @@ const ExploreSearch = ({ heading }) => {
   const [search, setSearch] = useState(params.get("q") ?? "");
   const [page, setPage] = useState(1);
 
+  document.title = `KS MDB | ${search ? `s: ${search}` : "Search"}`;
+
   const fetchData = useCallback(
     (pg = page) => {
-      fetchRecordFromApi(`/search/multi?query=${search}&page=${pg}`)
+      fetchRecordFromApi(
+        `${TMDB_API_BASE_URL}/search/multi?query=${search}&page=${pg}`
+      )
         .then((response) => {
           if (response?.results) {
             if (pg > 1) {
@@ -54,7 +58,7 @@ const ExploreSearch = ({ heading }) => {
                 className="w-full px-6 py-4 text-white text-lg bg-gray-800 outline-none z-10"
                 placeholder="Search movies, tv shows..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => setSearch(String(e.target.value.trim()))}
                 required
               />
               <button
@@ -93,7 +97,7 @@ const ExploreSearch = ({ heading }) => {
             </InfiniteScroll>
           ) : (
             <div className="text-center text-2xl">
-              Sorry, Results not found!
+              Oops! No matching records found!
             </div>
           )}
         </>

@@ -7,6 +7,8 @@ const useAxios = (endpoint) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const options = {
       headers: {
         accept: "application/json",
@@ -14,21 +16,30 @@ const useAxios = (endpoint) => {
           import.meta.env.VITE_TMDB_API_READ_ACCESS_TOKEN
         }`,
       },
+      signal: controller.signal,
     };
 
     axios
       .get(endpoint, options)
       .then((response) => {
-        const data = response?.data;
-        if (data) {
-          setData(data);
+        if (controller.signal.aborted) return;
+        if (response?.data) {
+          setData(response?.data);
         } else {
           setError("Invalid result fetched!");
           console.log("Response: ", response);
         }
       })
-      .catch((error) => setError(error.message))
-      .finally(() => setLoading(false));
+      .catch((error) => {
+        if (controller.signal.aborted) return;
+        setError(error.message);
+      })
+      .finally(() => {
+        if (controller.signal.aborted) return;
+        setLoading(false);
+      });
+
+    return () => controller.abort();
   }, [endpoint]);
 
   return { data, error, loading };

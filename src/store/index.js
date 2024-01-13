@@ -1,10 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import confReducer from "./slices/confSlice";
-import genresReducer from "./slices/genresSlice";
+import tmdbReducer from "./slices/tmdbSlice";
 
 const rootReducer = combineReducers({
-  conf: confReducer,
-  genres: genresReducer,
+  tmdb: tmdbReducer,
 });
 
 const store = configureStore({

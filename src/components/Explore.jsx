@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import Select from "react-select";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchRecordFromApi } from "../utlils";
+import { TMDB_API_BASE_URL, fetchRecordFromApi } from "../utlils";
 import Spinner from "./Spinner";
 import Card from "./Card";
 
@@ -39,7 +39,10 @@ const Explore = ({ heading, mediaType }) => {
   }, [filters]);
 
   const fetchData = useCallback(() => {
-    fetchRecordFromApi(`/discover/${mediaType}?page=${page}`, getOptions())
+    fetchRecordFromApi(
+      `${TMDB_API_BASE_URL}/discover/${mediaType}?page=${page}`,
+      getOptions()
+    )
       .then((response) => {
         if (response?.results) {
           if (page > 1) {
@@ -67,7 +70,7 @@ const Explore = ({ heading, mediaType }) => {
     setPage(1);
   };
 
-  const genres = useSelector((state) => state.genres);
+  const genres = useSelector((state) => state.tmdb.genres);
   const genresOptions = useMemo(
     () =>
       Object.entries(genres)
@@ -125,7 +128,7 @@ const Explore = ({ heading, mediaType }) => {
             </InfiniteScroll>
           ) : (
             <div className="text-center text-2xl">
-              Sorry, Results not found!
+              Oops! No matching records found!
             </div>
           )}
         </>
