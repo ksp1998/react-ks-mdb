@@ -28,10 +28,10 @@ const ExploreSearch = ({ heading }) => {
             } else {
               setData(response);
             }
+            setPage(Number(pg) + 1);
           } else {
             console.log(response);
           }
-          setPage((prev) => prev + 1);
         })
         .catch((error) => console.log(error));
     },
@@ -58,7 +58,7 @@ const ExploreSearch = ({ heading }) => {
                 className="w-full px-6 py-4 text-white text-lg bg-gray-800 outline-none z-10"
                 placeholder="Search movies, tv shows..."
                 value={search}
-                onChange={(e) => setSearch(String(e.target.value.trim()))}
+                onChange={(e) => setSearch(String(e.target.value.trimStart()))}
                 required
               />
               <button

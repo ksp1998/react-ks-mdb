@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
 import Select from "react-select";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TMDB_API_BASE_URL, fetchRecordFromApi } from "../utlils";
 import Spinner from "./Spinner";
 import Card from "./Card";
+import { useSelector } from "react-redux";
 
 const sortByOptions = [
   { value: "popularity.desc", label: "Most Popular" },
@@ -24,13 +24,14 @@ const Explore = ({ heading, mediaType }) => {
   const [data, setData] = useState({ results: Array(20).fill({}) });
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({});
+  const genres = useSelector((state) => state.tmdb.genres?.[mediaType]);
+
+  console.log(genres);
 
   const getOptions = useCallback(() => {
     const options = {};
     if (filters?.genres && filters?.genres?.length > 0) {
-      options.with_genres = filters.genres
-        .map((genre) => genre.value)
-        .join(",");
+      options.with_genres = filters.genres.map((genre) => genre.id).join(",");
     }
     if (filters?.sortby) {
       options.sort_by = filters.sortby.value;
@@ -38,46 +39,41 @@ const Explore = ({ heading, mediaType }) => {
     return options;
   }, [filters]);
 
-  const fetchData = useCallback(() => {
-    fetchRecordFromApi(
-      `${TMDB_API_BASE_URL}/discover/${mediaType}?page=${page}`,
-      getOptions()
-    )
-      .then((response) => {
-        if (response?.results) {
-          if (page > 1) {
-            setData({
-              ...data,
-              results: [...data.results, ...response.results],
-            });
+  const fetchData = useCallback(
+    (pg = page) => {
+      fetchRecordFromApi(
+        `${TMDB_API_BASE_URL}/discover/${mediaType}?page=${pg}`,
+        getOptions()
+      )
+        .then((response) => {
+          if (response?.results) {
+            if (pg > 1) {
+              setData({
+                ...data,
+                results: [...data.results, ...response.results],
+              });
+            } else {
+              setData(response);
+            }
+            setPage(Number(pg) + 1);
           } else {
-            setData(response);
+            console.log(response);
           }
-        } else {
-          console.log(response);
-        }
-        setPage((prev) => prev + 1);
-      })
-      .catch((error) => console.log(error));
-  }, [mediaType, getOptions, page, data]);
+        })
+        .catch((error) => console.log(error));
+    },
+    [mediaType, getOptions, page, data]
+  );
 
   useEffect(() => {
-    fetchData();
+    fetchData(1);
   }, [filters]);
 
   const onChange = (selected, { name }) => {
+    console.log(selected);
     setFilters((prev) => ({ ...prev, [name]: selected }));
     setPage(1);
   };
-
-  const genres = useSelector((state) => state.tmdb.genres);
-  const genresOptions = useMemo(
-    () =>
-      Object.entries(genres)
-        .map(([id, genre]) => !isNaN(id) && { value: id, label: genre })
-        .filter((genre) => !!genre),
-    [genres]
-  );
 
   return (
     <div className="">
@@ -87,7 +83,9 @@ const Explore = ({ heading, mediaType }) => {
           name="genres"
           value={filters?.genres ?? []}
           closeMenuOnSelect={false}
-          options={genresOptions}
+          options={genres ?? []}
+          getOptionValue={(option) => option.id}
+          getOptionLabel={(option) => option.name}
           onChange={onChange}
           placeholder="Select genres"
           className="react-select-container min-w-32"

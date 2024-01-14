@@ -37,19 +37,32 @@ const Hero = () => {
           }}
         ></div>
       </Link>
+
       <div className="absolute bottom-0 p-4 flex flex-col gap-3 w-[min(100%,500px)]">
-        <h1 className="text-2xl lg:text-4xl font-bold">{movie?.title}</h1>
+        <h1 className="text-2xl lg:text-4xl font-bold">
+          {movie?.title || (
+            <div className="min-h-12 bg-gray-800 animate-pulse rounded-lg"></div>
+          )}
+        </h1>
         <div className="flex items-center gap-2">
-          <span className="w-max px-2 py-1 text-sm lg:text-base bg-green-700 font-semibold rounded-md">
-            New Release
-          </span>
+          {movie?.title && (
+            <div className="w-max px-2 py-1 text-sm lg:text-base bg-green-700 font-semibold rounded-md">
+              New Release
+            </div>
+          )}
           {movie?.adult && (
             <span className="w-max px-2 py-1 bg-gray-900 font-semibold rounded-md">
               18+
             </span>
           )}
         </div>
-        <p className="line-clamp-2 text-ellipsis">{movie?.overview}</p>
+        <p className="line-clamp-2 text-ellipsis font-semibold">
+          {movie?.title && movie?.overview}
+        </p>
+        {!movie?.title && (
+          <div className="min-h-20 bg-gray-800 animate-pulse rounded-lg"></div>
+        )}
+
         <div className="flex gap-1">
           {movie?.genre_ids?.map(
             (genreId) =>
@@ -58,6 +71,12 @@ const Hero = () => {
                   {genres[genreId]}
                 </div>
               )
+          )}
+          {!movie?.title && (
+            <>
+              <div className="min-h-5 bg-gray-800 animate-pulse rounded-lg"></div>
+              <div className="min-h-5 bg-gray-800 animate-pulse rounded-lg"></div>
+            </>
           )}
         </div>
       </div>

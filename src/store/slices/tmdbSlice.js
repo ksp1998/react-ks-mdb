@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let tmdb = {
-  genres: {},
+  genres: {
+    movie: [],
+    tv: [],
+  },
   conf: {},
 };
 
@@ -15,9 +18,16 @@ const tmdbSlice = createSlice({
     setGenres: (state, action) => {
       state.genres = action.payload;
     },
+    setMovieGenres: (state, action) => {
+      state.genres.movie = action.payload;
+    },
+    setTVGenres: (state, action) => {
+      state.genres.tv = action.payload;
+    },
   },
 });
 
-export const { setTMDBConf, setGenres } = tmdbSlice.actions;
+export const { setTMDBConf, setGenres, setMovieGenres, setTVGenres } =
+  tmdbSlice.actions;
 
 export default tmdbSlice.reducer;

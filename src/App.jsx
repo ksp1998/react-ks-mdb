@@ -14,20 +14,17 @@ const App = () => {
         .then((response) => dispatch(setTMDBConf(response)))
         .catch((error) => console.log(error));
 
-      let promises = [];
-      let endPoints = ["tv", "movie"];
       let allGenres = {};
 
-      endPoints.forEach((type) => {
-        promises.push(
-          fetchRecordFromApi(`${TMDB_API_BASE_URL}/genre/${type}/list`)
-        );
-      });
-
-      const data = await Promise.all(promises);
-      data.map(({ genres }) =>
-        genres.map((genre) => (allGenres[genre?.id] = genre?.name))
+      let response = await fetchRecordFromApi(
+        `${TMDB_API_BASE_URL}/genre/movie/list`
       );
+      response?.genres?.map((genre) => (allGenres[genre?.id] = genre?.name));
+      allGenres.movie = response?.genres;
+
+      response = await fetchRecordFromApi(`${TMDB_API_BASE_URL}/genre/tv/list`);
+      response?.genres?.map((genre) => (allGenres[genre?.id] = genre?.name));
+      allGenres.tv = response?.genres;
 
       dispatch(setGenres(allGenres));
     })();
