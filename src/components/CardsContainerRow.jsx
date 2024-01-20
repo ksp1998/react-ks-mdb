@@ -1,5 +1,5 @@
 import useAxios from "../utlils/hooks/useAxios";
-import { Card } from "./";
+import { Card, ScrollContainer } from "./";
 
 const CardsContainerRow = ({ endpoint, title, className = "" }) => {
   const { data, error } = useAxios(endpoint);
@@ -7,11 +7,11 @@ const CardsContainerRow = ({ endpoint, title, className = "" }) => {
   return (
     <div className="relative p-2">
       <h3 className="text-xl font-bold py-2">{title}</h3>
-      <div className={`flex gap-2 overflow-auto no-scrollbar ${className}`}>
+      <ScrollContainer className={className}>
         {(data?.results || Array(20).fill(null))?.map((record, index) => (
           <Card key={record?.id || index} record={record} />
         ))}
-      </div>
+      </ScrollContainer>
       <div className="text-red-500">{error}</div>
     </div>
   );

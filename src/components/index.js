@@ -12,6 +12,7 @@ import VideoCard from "./VideoCard";
 import RatingProgress from "./RatingProgress";
 import PlayIcon from "./PlayIcon";
 import Player from "./Player";
+import ScrollContainer from "./ScrollContainer";
 
 export {
   Header,
@@ -28,4 +29,5 @@ export {
   RatingProgress,
   PlayIcon,
   Player,
+  ScrollContainer,
 };
