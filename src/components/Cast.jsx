@@ -1,16 +1,26 @@
 import { useSelector } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Link } from "react-router-dom";
 
 const Cast = ({ cast, error, className }) => {
   const conf = useSelector((state) => state.tmdb.conf);
+
+  const CastLinkTag = ({ member, children, ...props }) => {
+    return member ? (
+      <Link to={`/person/${member?.id}`} {...props}>{children}</Link>
+    ) : (
+      <div {...props}>{children}</div>
+    );
+  };
 
   return (
     <div className="relative p-2">
       <h3 className="text-xl font-bold py-2">Top Cast</h3>
       <div className={`flex gap-8 overflow-auto no-scrollbar ${className}`}>
         {(cast || Array(10).fill(null))?.map((member, i) => (
-          <div
+          <CastLinkTag
             key={member?.id || i}
+            member={member}
             className="cursor-pointer min-w-[calc(100%/3-32px)] sm:min-w-[calc(100%/4-32px)] md:min-w-[calc(100%/5-32px)] lg:min-w-[calc(100%/6-32px)] xl:min-w-[calc(100%/7-32px)] 2xl:min-w-[calc(100%/8-32px)] w-[calc(100%/3-32px)] sm:w-[calc(100%/4-32px)] md:w-[calc(100%/5-32px)] lg:w-[calc(100%/6-32px)] xl:w-[calc(100%/7-32px)] 2xl:w-[calc(100%/8-32px)]"
           >
             <div className="rounded-full overflow-hidden aspect-square">
@@ -42,7 +52,7 @@ const Cast = ({ cast, error, className }) => {
                 )}
               </div>
             </div>
-          </div>
+          </CastLinkTag>
         ))}
       </div>
       <div className="text-red-500">{error}</div>

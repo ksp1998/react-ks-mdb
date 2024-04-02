@@ -13,6 +13,7 @@ import RatingProgress from "./RatingProgress";
 import PlayIcon from "./PlayIcon";
 import Player from "./Player";
 import ScrollContainer from "./ScrollContainer";
+import PersonDetails from "./PersonDetails";
 
 export {
   Header,
@@ -30,4 +31,5 @@ export {
   PlayIcon,
   Player,
   ScrollContainer,
+  PersonDetails,
 };

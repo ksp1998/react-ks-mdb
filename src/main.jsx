@@ -6,6 +6,7 @@ import { Home, Movies, Shows, Search, Details, _404 } from "./pages";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
+import Person from "./pages/Person";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/tv/:id",
         element: <Details mediaType="tv" />,
+      },
+      {
+        path: "/person/:id",
+        element: <Person />,
       },
       {
         path: "/*",
