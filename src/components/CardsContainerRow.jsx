@@ -1,12 +1,19 @@
 import useAxios from "../utlils/hooks/useAxios";
 import { Card, ScrollContainer } from "./";
 
-const CardsContainerRow = ({ endpoint, title, className = "", resultsKey }) => {
+const CardsContainerRow = ({
+  endpoint,
+  title,
+  className = "",
+  getResults = (data) => data.results,
+}) => {
   const { data, error } = useAxios(endpoint);
 
-  const results = resultsKey ? data[resultsKey] : data?.results;
+  const results = getResults(data);
 
-  console.log(results);
+  if (results?.length === 0) {
+    return;
+  }
 
   return (
     <div className="relative p-2">
