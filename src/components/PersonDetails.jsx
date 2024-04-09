@@ -63,7 +63,7 @@ const PersonDetails = ({ id }) => {
 
       <div className="relative py-8">
         <div className="max-w-7xl m-auto flex flex-col gap-8 p-4 md:flex-row">
-          <div className="m-auto md:m-0 aspect-[2/3] min-w-[min(100%,300px)] md:min-w-[300px] lg:w-[350px] max-w-[350px] mb-8">
+          <div className="m-auto md:m-0 aspect-[2/3] min-w-[min(100%,300px)] md:min-w-[300px] lg:w-[350px] max-w-[350px]">
             <LazyLoadImage
               wrapperClassName={`w-full bg-gray-900 aspect-[2/3] rounded-lg overflow-hidden ${
                 loading ? "animate-pulse" : ""
@@ -101,7 +101,7 @@ const PersonDetails = ({ id }) => {
             </ul>
           </div>
 
-          <div className="flex-grow flex flex-col gap-4 z-10">
+          <div className="flex-grow flex flex-col gap-4 z-10 mt-10 md:mt-0">
             <div className="text-4xl lg:text-6xl font-extrabold">
               {!loading && person?.name}
               {loading && (
@@ -109,8 +109,8 @@ const PersonDetails = ({ id }) => {
               )}
             </div>
 
-            {/* Biography */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2.5">
+              {/* Biography */}
               {person?.biography && (
                 <>
                   <div className="text-2xl font-bold py-2">Biography</div>
@@ -119,12 +119,7 @@ const PersonDetails = ({ id }) => {
                   </div>
                 </>
               )}
-              {loading && (
-                <div className="min-h-32 bg-gray-800 rounded-lg animate-pulse"></div>
-              )}
-            </div>
 
-            <div className="flex gap-2.5 flex-col">
               {/* Known For */}
               {person?.known_for_department && (
                 <div className="flex gap-3 py-2.5 border-y-2 border-gray-800 font-bold">
@@ -167,7 +162,7 @@ const PersonDetails = ({ id }) => {
                 </div>
               )}
 
-              <div className="flex flex-col lg:flex-row gap-3 pb-2.5 border-b-2 border-gray-800">
+              <div className="flex flex-col lg:flex-row gap-3 pb-2.5">
                 {/* Birthday */}
                 {person?.birthday && (
                   <div className="flex gap-3 font-bold">
@@ -195,17 +190,23 @@ const PersonDetails = ({ id }) => {
                 )}
               </div>
 
+              {loading && (
+                <>
+                  <div className="min-h-32 bg-gray-800 rounded-lg animate-pulse"></div>
+                  <div className="min-h-12 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
+                  <div className="min-h-12 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
+                  <div className="min-h-12 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
+                  <div className="min-h-12 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
+                </>
+              )}
+
               {/* Also Known As */}
               <div className="flex flex-col gap-2">
                 {person?.also_known_as && (
                   <div className="text-md font-bold">Also Known As</div>
                 )}
 
-                {loading && (
-                  <div className="min-h-8 bg-gray-800 rounded-lg animate-pulse"></div>
-                )}
-
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1 max-w-max">
                   {person?.also_known_as?.map(
                     (knownAs, index) =>
                       knownAs && (
@@ -217,31 +218,17 @@ const PersonDetails = ({ id }) => {
                         </div>
                       )
                   )}
+
                   {loading && (
                     <>
-                      <div className="min-h-8 w-32 bg-gray-800 rounded-lg animate-pulse"></div>
-                      <div className="min-h-8 w-32 bg-gray-800 rounded-lg animate-pulse"></div>
+                      <div className="min-h-8 w-24 lg:1/2 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
+                      <div className="min-h-8 w-24 lg:1/2 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
+                      <div className="min-h-8 w-24 lg:1/2 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
                     </>
                   )}
                 </div>
               </div>
-
-              {loading && (
-                <>
-                  <div className="min-h-6 w-3/4 lg:1/2 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
-                  <div className="min-h-6 w-3/4 lg:1/2 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
-                  <div className="min-h-6 w-3/4 lg:1/2 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
-                </>
-              )}
             </div>
-
-            {loading && (
-              <>
-                <div className="min-h-8 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
-                <div className="min-h-8 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
-                <div className="min-h-8 flex-grow bg-gray-800 rounded-lg animate-pulse"></div>
-              </>
-            )}
           </div>
         </div>
       </div>

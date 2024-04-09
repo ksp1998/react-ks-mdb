@@ -1,13 +1,16 @@
 import { useSelector } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
+import { scrollToTop } from "../utlils";
 
 const Cast = ({ cast, error, className }) => {
   const conf = useSelector((state) => state.tmdb.conf);
 
   const CastLinkTag = ({ member, children, ...props }) => {
     return member ? (
-      <Link to={`/person/${member?.id}`} {...props}>{children}</Link>
+      <Link to={`/person/${member?.id}`} {...props} onClick={scrollToTop}>
+        {children}
+      </Link>
     ) : (
       <div {...props}>{children}</div>
     );

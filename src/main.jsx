@@ -2,11 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Home, Movies, Shows, Search, Details, _404 } from "./pages";
+import { Home, Movies, Person, Shows, Search, Details, _404 } from "./pages";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
-import Person from "./pages/Person";
 
 const router = createBrowserRouter([
   {
